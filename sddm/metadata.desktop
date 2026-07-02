@@ -1,0 +1,13 @@
+[SddmGreeterTheme]
+Name=moller-malt
+Description=moller-malt SDDM theme
+Author=chadmoller
+Website=https://github.com/chadmoller/moller-malt
+License=GPL-3.0-or-later
+Type=sddm-theme
+Version=0.1.0
+ConfigFile=theme.conf
+MainScript=Main.qml
+Theme-Id=moller-malt
+Theme-API=2.0
+QtVersion=6
