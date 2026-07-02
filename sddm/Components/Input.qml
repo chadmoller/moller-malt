@@ -14,6 +14,7 @@ Column {
 
     property ComboBox exposeSession: sessionSelect.exposeSession
     property bool failed
+    property bool loginPending: false
 
     Item {
         id: errorMessageField
@@ -242,7 +243,13 @@ Column {
                 radius: config.RoundCorners || 0
             }
             
-            onAccepted: config.AllowUppercaseLettersInUsernames == "false" ? sddm.login(username.text.toLowerCase(), password.text, sessionSelect.selectedSession) : sddm.login(username.text, password.text, sessionSelect.selectedSession)
+            onAccepted: {
+                loginPending = true
+                if (config.AllowUppercaseLettersInUsernames == "false")
+                    sddm.login(username.text.toLowerCase(), password.text, sessionSelect.selectedSession)
+                else
+                    sddm.login(username.text, password.text, sessionSelect.selectedSession)
+            }
             KeyNavigation.down: passwordIcon
 
             states: [
@@ -369,7 +376,13 @@ Column {
                 border.width: parent.activeFocus ? 2 : 1
                 radius: config.RoundCorners || 0
             }
-            onAccepted: config.AllowUppercaseLettersInUsernames == "false" ? sddm.login(username.text.toLowerCase(), password.text, sessionSelect.selectedSession) : sddm.login(username.text, password.text, sessionSelect.selectedSession)
+            onAccepted: {
+                loginPending = true
+                if (config.AllowUppercaseLettersInUsernames == "false")
+                    sddm.login(username.text.toLowerCase(), password.text, sessionSelect.selectedSession)
+                else
+                    sddm.login(username.text, password.text, sessionSelect.selectedSession)
+            }
             KeyNavigation.down: loginButton
         }
 
@@ -502,7 +515,13 @@ Column {
                 }
             ]
 
-            onClicked: config.AllowUppercaseLettersInUsernames == "false" ? sddm.login(username.text.toLowerCase(), password.text, sessionSelect.selectedSession) : sddm.login(username.text, password.text, sessionSelect.selectedSession)
+            onClicked: {
+                loginPending = true
+                if (config.AllowUppercaseLettersInUsernames == "false")
+                    sddm.login(username.text.toLowerCase(), password.text, sessionSelect.selectedSession)
+                else
+                    sddm.login(username.text, password.text, sessionSelect.selectedSession)
+            }
             Keys.onReturnPressed: clicked()
             Keys.onEnterPressed: clicked()
             
@@ -510,10 +529,32 @@ Column {
         }
     }
 
+    Item {
+        id: fingerprintMessageField
+
+        height: root.font.pointSize * 2
+        width: parent.width / 2
+        anchors.horizontalCenter: parent.horizontalCenter
+        visible: loginPending && !failed
+
+        Label {
+            width: parent.width
+            horizontalAlignment: Text.AlignHCenter
+
+            text: "Scan your fingerprint"
+            font.pointSize: root.font.pointSize * 0.8
+            font.italic: true
+            color: "#b7cef1"
+        }
+    }
+
     Connections {
         target: sddm
-        function onLoginSucceeded() {}
+        function onLoginSucceeded() {
+            loginPending = false
+        }
         function onLoginFailed() {
+            loginPending = false
             failed = true
             resetError.running ? resetError.stop() && resetError.start() : resetError.start()
         }
