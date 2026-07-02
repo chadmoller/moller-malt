@@ -49,6 +49,8 @@ Item {
                 font.pointSize: root.font.pointSize * 0.8
                 font.family: root.font.family
                 color: config.DropdownTextColor
+                style: Text.Outline
+                styleColor: "white"
             }
             
             background: Rectangle {
@@ -64,9 +66,11 @@ Item {
             id: displayedItem
 
             verticalAlignment: Text.AlignVCenter
-            
+
             text: (config.TranslateSessionSelection || "Session") + " (" + selectSession.currentText + ")"
             color: config.SessionButtonTextColor
+            style: Text.Outline
+            styleColor: "white"
             font.pointSize: root.font.pointSize * 0.8
             font.family: root.font.family
 

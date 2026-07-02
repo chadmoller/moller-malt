@@ -32,6 +32,8 @@ Item {
             font.pointSize: root.font.pointSize * 0.8
             font.family: root.font.family
             color: parent.visualFocus ? config.HoverVirtualKeyboardButtonTextColor : config.VirtualKeyboardButtonTextColor
+            style: Text.Outline
+            styleColor: "white"
         }
 
         background: Rectangle {

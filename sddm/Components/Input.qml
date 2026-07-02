@@ -34,6 +34,8 @@ Column {
             font.pointSize: root.font.pointSize * 0.8
             font.italic: true
             color: config.WarningColor
+            style: Text.Outline
+            styleColor: "white"
             opacity: 0
             
             states: [
@@ -441,6 +443,8 @@ Column {
                 font.pointSize: root.font.pointSize
                 font.family: root.font.family
                 color: config.LoginButtonTextColor
+                style: Text.Outline
+                styleColor: "white"
                 text: parent.text
                 opacity: 0.5
             }
@@ -524,27 +528,24 @@ Column {
             }
             Keys.onReturnPressed: clicked()
             Keys.onEnterPressed: clicked()
-            
+
             KeyNavigation.down: config.HideSystemButtons == "true" ? virtualKeyboard : systemButtons.children[0]
         }
-    }
-
-    Item {
-        id: fingerprintMessageField
-
-        height: root.font.pointSize * 2
-        width: parent.width / 2
-        anchors.horizontalCenter: parent.horizontalCenter
-        visible: loginPending && !failed
 
         Label {
-            width: parent.width
-            horizontalAlignment: Text.AlignHCenter
+            id: fingerprintMessage
 
+            anchors.top: loginButton.bottom
+            anchors.topMargin: root.font.pointSize * 0.5
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            visible: loginPending && !failed
             text: "Scan your fingerprint"
             font.pointSize: root.font.pointSize * 0.8
             font.italic: true
-            color: "#b7cef1"
+            color: "#000000"
+            style: Text.Outline
+            styleColor: "white"
         }
     }
 

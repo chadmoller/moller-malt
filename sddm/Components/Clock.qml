@@ -19,6 +19,8 @@ Column {
 
         font.pointSize: root.font.pointSize * 3
         color: config.HeaderTextColor
+        style: Text.Outline
+        styleColor: "white"
         renderType: Text.QtRendering
         text: config.HeaderText
     }
@@ -31,6 +33,8 @@ Column {
         font.pointSize: root.font.pointSize * 9
         font.bold: true
         color: config.TimeTextColor
+        style: Text.Outline
+        styleColor: "white"
         renderType: Text.QtRendering
 
         function updateTime() {
@@ -42,8 +46,10 @@ Column {
         id: dateLabel
 
         anchors.horizontalCenter: parent.horizontalCenter
-        
+
         color: config.DateTextColor
+        style: Text.Outline
+        styleColor: "white"
         font.pointSize: root.font.pointSize * 2
         font.bold: true
         renderType: Text.QtRendering
