@@ -247,12 +247,7 @@ Column {
             
             onAccepted: {
                 loginPending = true
-                Qt.callLater(function() {
-                    if (config.AllowUppercaseLettersInUsernames == "false")
-                        sddm.login(username.text.toLowerCase(), password.text, sessionSelect.selectedSession)
-                    else
-                        sddm.login(username.text, password.text, sessionSelect.selectedSession)
-                })
+                loginTimer.start()
             }
             KeyNavigation.down: passwordIcon
 
@@ -381,7 +376,7 @@ Column {
             width: parent.width
             anchors.centerIn: parent
             horizontalAlignment: TextInput.AlignHCenter
-            
+
             font.bold: true
             color: config.PasswordFieldTextColor
             focus: config.PasswordFocus == "true" ? true : false
@@ -392,7 +387,7 @@ Column {
             passwordMaskDelay: config.HideCompletePassword == "true" ? undefined : 1000
             renderType: Text.QtRendering
             selectByMouse: true
-            
+
             background: Rectangle {
                 color: config.PasswordFieldBackgroundColor
                 opacity: 0.2
@@ -402,12 +397,7 @@ Column {
             }
             onAccepted: {
                 loginPending = true
-                Qt.callLater(function() {
-                    if (config.AllowUppercaseLettersInUsernames == "false")
-                        sddm.login(username.text.toLowerCase(), password.text, sessionSelect.selectedSession)
-                    else
-                        sddm.login(username.text, password.text, sessionSelect.selectedSession)
-                })
+                loginTimer.start()
             }
             KeyNavigation.down: loginButton
         }
@@ -543,12 +533,7 @@ Column {
 
             onClicked: {
                 loginPending = true
-                Qt.callLater(function() {
-                    if (config.AllowUppercaseLettersInUsernames == "false")
-                        sddm.login(username.text.toLowerCase(), password.text, sessionSelect.selectedSession)
-                    else
-                        sddm.login(username.text, password.text, sessionSelect.selectedSession)
-                })
+                loginTimer.start()
             }
             Keys.onReturnPressed: clicked()
             Keys.onEnterPressed: clicked()
@@ -575,5 +560,16 @@ Column {
         interval: 2000
         onTriggered: failed = false
         running: false
+    }
+
+    Timer {
+        id: loginTimer
+        interval: 50
+        onTriggered: {
+            if (config.AllowUppercaseLettersInUsernames == "false")
+                sddm.login(username.text.toLowerCase(), password.text, sessionSelect.selectedSession)
+            else
+                sddm.login(username.text, password.text, sessionSelect.selectedSession)
+        }
     }
 }
