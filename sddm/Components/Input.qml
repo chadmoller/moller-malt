@@ -269,12 +269,11 @@ Column {
     }
     
     Item {
-        id: fingerprintHint
+        id: passwordField
 
         height: root.font.pointSize * 4.5
         width: parent.width / 2
         anchors.horizontalCenter: parent.horizontalCenter
-        visible: loginPending && !failed
 
         Label {
             anchors.centerIn: parent
@@ -284,19 +283,12 @@ Column {
             color: "#000000"
             style: Text.Outline
             styleColor: "white"
+            opacity: (loginPending && !failed) ? 1 : 0
         }
-    }
 
-    Item {
-        id: passwordField
-
-        height: root.font.pointSize * 4.5
-        width: parent.width / 2
-        anchors.horizontalCenter: parent.horizontalCenter
-        visible: !loginPending
-        
         Button {
             id: passwordIcon
+            opacity: loginPending ? 0 : 1
             
             height: parent.height
             width: selectUser.height * 1
@@ -376,6 +368,8 @@ Column {
             width: parent.width
             anchors.centerIn: parent
             horizontalAlignment: TextInput.AlignHCenter
+            opacity: loginPending ? 0 : 1
+            enabled: !loginPending
 
             font.bold: true
             color: config.PasswordFieldTextColor
