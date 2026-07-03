@@ -247,10 +247,12 @@ Column {
             
             onAccepted: {
                 loginPending = true
-                if (config.AllowUppercaseLettersInUsernames == "false")
-                    sddm.login(username.text.toLowerCase(), password.text, sessionSelect.selectedSession)
-                else
-                    sddm.login(username.text, password.text, sessionSelect.selectedSession)
+                Qt.callLater(function() {
+                    if (config.AllowUppercaseLettersInUsernames == "false")
+                        sddm.login(username.text.toLowerCase(), password.text, sessionSelect.selectedSession)
+                    else
+                        sddm.login(username.text, password.text, sessionSelect.selectedSession)
+                })
             }
             KeyNavigation.down: passwordIcon
 
@@ -400,10 +402,12 @@ Column {
             }
             onAccepted: {
                 loginPending = true
-                if (config.AllowUppercaseLettersInUsernames == "false")
-                    sddm.login(username.text.toLowerCase(), password.text, sessionSelect.selectedSession)
-                else
-                    sddm.login(username.text, password.text, sessionSelect.selectedSession)
+                Qt.callLater(function() {
+                    if (config.AllowUppercaseLettersInUsernames == "false")
+                        sddm.login(username.text.toLowerCase(), password.text, sessionSelect.selectedSession)
+                    else
+                        sddm.login(username.text, password.text, sessionSelect.selectedSession)
+                })
             }
             KeyNavigation.down: loginButton
         }
@@ -539,10 +543,12 @@ Column {
 
             onClicked: {
                 loginPending = true
-                if (config.AllowUppercaseLettersInUsernames == "false")
-                    sddm.login(username.text.toLowerCase(), password.text, sessionSelect.selectedSession)
-                else
-                    sddm.login(username.text, password.text, sessionSelect.selectedSession)
+                Qt.callLater(function() {
+                    if (config.AllowUppercaseLettersInUsernames == "false")
+                        sddm.login(username.text.toLowerCase(), password.text, sessionSelect.selectedSession)
+                    else
+                        sddm.login(username.text, password.text, sessionSelect.selectedSession)
+                })
             }
             Keys.onReturnPressed: clicked()
             Keys.onEnterPressed: clicked()
