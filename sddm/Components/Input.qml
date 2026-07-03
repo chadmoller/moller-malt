@@ -272,11 +272,31 @@ Column {
     }
     
     Item {
+        id: fingerprintHint
+
+        height: root.font.pointSize * 4.5
+        width: parent.width / 2
+        anchors.horizontalCenter: parent.horizontalCenter
+        visible: loginPending && !failed
+
+        Label {
+            anchors.centerIn: parent
+            text: "Scan your fingerprint"
+            font.pointSize: root.font.pointSize * 0.8
+            font.italic: true
+            color: "#000000"
+            style: Text.Outline
+            styleColor: "white"
+        }
+    }
+
+    Item {
         id: passwordField
 
         height: root.font.pointSize * 4.5
         width: parent.width / 2
         anchors.horizontalCenter: parent.horizontalCenter
+        visible: !loginPending
         
         Button {
             id: passwordIcon
@@ -415,9 +435,7 @@ Column {
     Item {
         id: login
 
-        // important
-        // try 4 or 9 ...
-        height: root.font.pointSize * 9
+        height: root.font.pointSize * 4
         width: parent.width / 2
         anchors.horizontalCenter: parent.horizontalCenter
 
@@ -532,21 +550,6 @@ Column {
             KeyNavigation.down: config.HideSystemButtons == "true" ? virtualKeyboard : systemButtons.children[0]
         }
 
-        Label {
-            id: fingerprintMessage
-
-            anchors.top: loginButton.bottom
-            anchors.topMargin: root.font.pointSize * 0.5
-            anchors.horizontalCenter: parent.horizontalCenter
-
-            visible: loginPending && !failed
-            text: "Scan your fingerprint"
-            font.pointSize: root.font.pointSize * 0.8
-            font.italic: true
-            color: "#000000"
-            style: Text.Outline
-            styleColor: "white"
-        }
     }
 
     Connections {
